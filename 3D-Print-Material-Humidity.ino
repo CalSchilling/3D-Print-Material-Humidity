@@ -2,15 +2,20 @@
 #include "LiquidCrystal.h"
 
 #define DHTPIN 6
+#define buttonPIN = 7
 #define DHTTYPE DHT22
 
 DHT dht(DHTPIN, DHTTYPE);
+
+LiquidCrystal lcd (12, 11, 5, 4, 3, 2);
 
 void setup() {
 	Serial.begin(9600);
 	Serial.println(F("DHTxx test!"));
 
-	dht.begin()'';
+	dht.begin();
+
+	pinMode(buttonPin, INPUT);
 }
 
 void loop () {
@@ -28,6 +33,7 @@ void loop () {
   if (isnan(h) || isnan(t) || isnan(f)) {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
+
      }
 
   // Compute heat index in Fahrenheit (the default)
@@ -46,4 +52,24 @@ void loop () {
   Serial.print(F("°C "));
   Serial.print(hif);
   Serial.println(F("°F"));
+
+  val = digitalRead(buttonPin); // read input value either HIGH or LOW
+  if (val == HIGH) {
+  lcd.begin(16, 2);
+  lcd.print("Temp:");
+  lcd.setCursor(0, 1);
+  lcd.print("Humi:");
+  lcd.setCursor(11, 0);
+  lcd.print("F.");
+  lcd.setCursor(11, 1);
+  lcd.print("%");
+  lcd.setCursor(6, 0);
+  lcd.print(f,1);
+  lcd.setCursor(6, 1);
+  lcd.print(h,1);
+  delay (5000); // wait 5 seconds before turning display off
+	}
+  else {
+	}
+
 }
