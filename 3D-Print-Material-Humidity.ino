@@ -2,7 +2,7 @@
 #include "LiquidCrystal.h"
 
 #define DHTPIN 6
-#define buttonPIN = 7
+#define buttonPIN 7
 #define DHTTYPE DHT22
 
 DHT dht(DHTPIN, DHTTYPE);
